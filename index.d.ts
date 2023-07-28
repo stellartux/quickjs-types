@@ -1,7 +1,8 @@
 /// <reference lib="es2020" />
+// deno-lint-ignore-file no-explicit-any
 
-/** 
- * Provides the command line arguments. The first argument is the script name. 
+/**
+ * Provides the command line arguments. The first argument is the script name.
  */
 declare let scriptArgs: string;
 
@@ -9,7 +10,7 @@ declare let scriptArgs: string;
  * Print the arguments separated by spaces and a trailing newline.
  * Equivalent to `console.log`.
  */
-declare function print(...args: any[]): void;
+declare function print(...data: any[]): void;
 
 declare namespace std {
   /**
@@ -19,7 +20,7 @@ declare namespace std {
   export function exit(n?: number): never;
 
   /**
-   * Evaluate the string str as a script (global eval).
+   * Evaluate the string `str` as a script (global eval).
    * options is an optional object containing the following optional properties:
    * - `backtrace_barrier` Boolean (default = false).
    *   - If true, error backtraces do not list the stack frames below the
@@ -30,7 +31,7 @@ declare namespace std {
     options?: { backtrace_barrier?: boolean },
   ): any;
 
-  /** Evaluate the file filename as a script (global eval). */
+  /** Evaluate the file `filename` as a script (global eval). */
   export function loadScript(filename: string): any;
 
   /**
@@ -47,7 +48,7 @@ declare namespace std {
   export function open(
     filename: string,
     flags: string,
-    errorObj?: object,
+    errorObj?: { errno?: number },
   ): FILE | null;
 
   /**
@@ -59,7 +60,7 @@ declare namespace std {
   export function popen(
     command: string,
     flags: string,
-    errorObj?: object,
+    errorObj?: { errno?: number },
   ): FILE | null;
 
   /**
@@ -70,7 +71,7 @@ declare namespace std {
   export function fdopen(
     fd: FILE,
     flags: string,
-    errorObj?: object,
+    errorObj?: { errno?: number },
   ): FILE | null;
 
   /**
@@ -78,7 +79,7 @@ declare namespace std {
    * If errorObj is not undefined, set its errno property to the error code or
    * to 0 if no error occurred.
    */
-  export function tmpfile(errorObj?: object): FILE | null;
+  export function tmpfile(errorObj?: { errno?: number }): FILE | null;
 
   /** Equivalent to `std.out.puts(str)`. */
   export function puts(str: string): void;
@@ -137,7 +138,7 @@ declare namespace std {
   /** Delete the environment variable `name`. */
   export function unsetenv(name: string): void;
 
-  /** 
+  /**
    * Return an object containing the environment variables as key-value pairs.
    */
   export function getenviron(): Record<string, string>;
@@ -200,7 +201,7 @@ declare namespace std {
   /**
    * Parse `str` using a superset of `JSON.parse`. The following extensions
    * are accepted:
-   * 
+   *
    * - Single line and multiline comments
    * - unquoted properties (ASCII-only Javascript identifiers)
    * - trailing comma in array and object definitions
@@ -211,7 +212,7 @@ declare namespace std {
    */
   export function parseExtJSON(
     str: string,
-  ): string | number | object | boolean | Array<any> | null;
+  ): string | number | Record<string, any> | boolean | Array<any> | null;
 
   interface FILE {
     /**
@@ -277,7 +278,7 @@ declare namespace std {
       buffer: ArrayBuffer,
       position: number | BigInt,
       length: number | BigInt,
-    );
+    ): void;
 
     /**
      * Write `length` bytes to the file from the ArrayBuffer `buffer` at byte
@@ -287,7 +288,7 @@ declare namespace std {
       buffer: ArrayBuffer,
       position: number | BigInt,
       length: number | BigInt,
-    );
+    ): void;
 
     /**
      * Return the next line from the file, assuming UTF-8 encoding, excluding
@@ -347,7 +348,9 @@ declare namespace os {
   export const O_EXCL: number;
   export const O_TRUNC: number;
 
-  // (Windows specific). Open the file in text mode. The default is binary mode.
+  /**
+   * (Windows specific). Open the file in text mode. The default is binary mode.
+   */
   export const O_TEXT: number;
 
   /** Close the file handle `fd`. */
@@ -383,9 +386,7 @@ declare namespace os {
     length: number,
   ): number;
 
-  /**
-   * Return true is fd is a TTY (terminal) handle.
-   */
+  /** Return true is fd is a TTY (terminal) handle. */
   export function isatty(fd: FileHandle): boolean;
 
   /** Return the TTY size as `[width, height]` or `null` if not available. */
@@ -510,7 +511,10 @@ declare namespace os {
    * handler or `undefined` to ignore the signal. Signal handlers can only be
    * defined in the main thread.
    */
-  export function signal(signal: Signal, func?: Function | null): void;
+  export function signal(
+    signal: Signal,
+    func?: (() => void) | null | undefined,
+  ): void;
 
   /** POSIX signal numbers */
   type Signal = number;
@@ -592,7 +596,7 @@ declare namespace os {
   export function dup(fd: FileHandle): FileHandle;
 
   /** dup2 Unix system call. */
-  export function dup2(oldfd: FileHandle, newfd: FileHandle);
+  export function dup2(oldfd: FileHandle, newfd: FileHandle): void;
 
   /**
    * pipe Unix system call.
@@ -606,7 +610,7 @@ declare namespace os {
   type TimerHandle = number;
 
   /** Call the function func after `delay` ms. Return a handle to the timer. */
-  export function setTimeout(func: Function, delay: number): TimerHandle;
+  export function setTimeout(func: () => void, delay: number): TimerHandle;
 
   /** Cancel a timer. */
   export function clearTimeout(handle: TimerHandle): void;
