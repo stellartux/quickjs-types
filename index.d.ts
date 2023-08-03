@@ -4,7 +4,7 @@
 /**
  * Provides the command line arguments. The first argument is the script name.
  */
-declare let scriptArgs: string;
+declare let scriptArgs: string[];
 
 /**
  * Print the arguments separated by spaces and a trailing newline.
