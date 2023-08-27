@@ -198,6 +198,10 @@ declare namespace std {
     },
   ): string | null;
 
+  export type JSONValue = string | number | boolean | JSONValue[] | null | {
+    [key: string]: JSONValue;
+  };
+
   /**
    * Parse `str` using a superset of `JSON.parse`. The following extensions
    * are accepted:
@@ -210,9 +214,7 @@ declare namespace std {
    * - leading plus in numbers
    * - octal (0o prefix) and hexadecimal (0x prefix) numbers
    */
-  export function parseExtJSON(
-    str: string,
-  ): string | number | Record<string, any> | boolean | Array<any> | null;
+  export function parseExtJSON(str: string): JSONValue;
 
   interface FILE {
     /**
