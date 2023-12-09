@@ -1,5 +1,185 @@
 /// <reference lib="es2020" />
+/// <reference lib="es2021.string" />
+/// <reference lib="es2022.array" />
+/// <reference lib="es2022.object" />
 // deno-lint-ignore-file no-explicit-any
+// qjs version 2023-12-09
+
+// The Array/TypedArray method `findLast` is described as part of "es2023.array"
+// but the rest of "es2023.array" is not implemented in quickjs, so the
+// `findLast` interface is described below.
+
+interface Array<T> {
+  /**
+   * Iterate the array in reverse order and returns the value of the first
+   * element that satisfies the provided `predicate`. If no elements satisfy the
+   * `predicate`, returns `undefined`.
+   * @param predicate
+   * @param thisArg
+   */
+  findLast(
+    predicate: (value: T, index: number, array: T[]) => unknown,
+    thisArg?: any,
+  ): T | undefined;
+}
+
+interface Int8Array {
+  /**
+   * Iterate the array in reverse order and returns the value of the first
+   * element that satisfies the provided `predicate`. If no elements satisfy the
+   * `predicate`, returns `undefined`.
+   * @param predicate
+   * @param thisArg
+   */
+  findLast(
+    predicate: (value: number, index: number, array: Int8Array) => unknown,
+    thisArg?: any,
+  ): number | undefined;
+}
+
+interface Uint8Array {
+  /**
+   * Iterate the array in reverse order and returns the value of the first
+   * element that satisfies the provided `predicate`. If no elements satisfy the
+   * `predicate`, returns `undefined`.
+   * @param predicate
+   * @param thisArg
+   */
+  findLast(
+    predicate: (value: number, index: number, array: Uint8Array) => unknown,
+    thisArg?: any,
+  ): number | undefined;
+}
+
+interface Uint8ClampedArray {
+  /**
+   * Iterate the array in reverse order and returns the value of the first
+   * element that satisfies the provided `predicate`. If no elements satisfy the
+   * `predicate`, returns `undefined`.
+   * @param predicate
+   * @param thisArg
+   */
+  findLast(
+    predicate: (
+      value: number,
+      index: number,
+      array: Uint8ClampedArray,
+    ) => unknown,
+    thisArg?: any,
+  ): number | undefined;
+}
+
+interface Int16Array {
+  /**
+   * Iterate the array in reverse order and returns the value of the first
+   * element that satisfies the provided `predicate`. If no elements satisfy the
+   * `predicate`, returns `undefined`.
+   * @param predicate
+   * @param thisArg
+   */
+  findLast(
+    predicate: (value: number, index: number, array: Int16Array) => unknown,
+    thisArg?: any,
+  ): number | undefined;
+}
+
+interface Uint16Array {
+  /**
+   * Iterate the array in reverse order and returns the value of the first
+   * element that satisfies the provided `predicate`. If no elements satisfy the
+   * `predicate`, returns `undefined`.
+   * @param predicate
+   * @param thisArg
+   */
+  findLast(
+    predicate: (value: number, index: number, array: Uint16Array) => unknown,
+    thisArg?: any,
+  ): number | undefined;
+}
+
+interface Int32Array {
+  /**
+   * Iterate the array in reverse order and returns the value of the first
+   * element that satisfies the provided `predicate`. If no elements satisfy the
+   * `predicate`, returns `undefined`.
+   * @param predicate
+   * @param thisArg
+   */
+  findLast(
+    predicate: (value: number, index: number, array: Int32Array) => unknown,
+    thisArg?: any,
+  ): number | undefined;
+}
+
+interface Uint32Array {
+  /**
+   * Iterate the array in reverse order and returns the value of the first
+   * element that satisfies the provided `predicate`. If no elements satisfy the
+   * `predicate`, returns `undefined`.
+   * @param predicate
+   * @param thisArg
+   */
+  findLast(
+    predicate: (value: number, index: number, array: Uint32Array) => unknown,
+    thisArg?: any,
+  ): number | undefined;
+}
+
+interface Float32Array {
+  /**
+   * Iterate the array in reverse order and returns the value of the first
+   * element that satisfies the provided `predicate`. If no elements satisfy the
+   * `predicate`, returns `undefined`.
+   * @param predicate
+   * @param thisArg
+   */
+  findLast(
+    predicate: (value: number, index: number, array: Float32Array) => unknown,
+    thisArg?: any,
+  ): number | undefined;
+}
+
+interface Float64Array {
+  /**
+   * Iterate the array in reverse order and returns the value of the first
+   * element that satisfies the provided `predicate`. If no elements satisfy the
+   * `predicate`, returns `undefined`.
+   * @param predicate
+   * @param thisArg
+   */
+  findLast(
+    predicate: (value: number, index: number, array: Float64Array) => unknown,
+    thisArg?: any,
+  ): number | undefined;
+}
+
+interface BigInt64Array {
+  /**
+   * Iterate the array in reverse order and returns the value of the first
+   * element that satisfies the provided `predicate`. If no elements satisfy the
+   * `predicate`, returns `undefined`.
+   * @param predicate
+   * @param thisArg
+   */
+  findLast(
+    predicate: (value: number, index: number, array: Int16Array) => unknown,
+    thisArg?: any,
+  ): bigint | undefined;
+}
+
+interface BigUint64Array {
+  /**
+   * Iterate the array in reverse order and returns the value of the first
+   * element that satisfies the provided `predicate`. If no elements satisfy the
+   * `predicate`, returns `undefined`.
+   * @param predicate
+   * @param thisArg
+   */
+  findLast(
+    predicate: (value: number, index: number, array: BigUint64Array) => unknown,
+    thisArg?: any,
+  ): bigint | undefined;
+}
 
 /**
  * Provides the command line arguments. The first argument is the script name.
@@ -658,3 +838,6 @@ declare namespace os {
     set onmessage(func: ((msg: { data: any }) => void) | null);
   }
 }
+
+// Only
+// duplicated from https://github.com/microsoft/TypeScript/blob/main/src/lib/es2023.array.d.ts
